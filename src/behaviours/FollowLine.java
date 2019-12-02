@@ -12,8 +12,8 @@ public class FollowLine implements Behavior{
 	private LightSensor light;
 	
 	
-	public FollowLine(LightSensor light) {
-		this.light = light;
+	public FollowLine() {
+		this.light = new LightSensor(SensorPort.S1);
 		this.STANDARD_SPEED = 250;
 		this.isSupressed = true;
 	}
