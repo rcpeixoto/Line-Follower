@@ -11,10 +11,9 @@ import lejos.robotics.subsumption.Behavior;
 public class LineFollower {
 	
 	public static void main(String[] args) {
-		LightSensor lightSensor = new LightSensor(SensorPort.S1);
 		//Creates all behaviors
-		Behavior bLeastPriority = new FollowLine(lightSensor);
-		Behavior b0 = new FindLine(lightSensor);
+		Behavior bLeastPriority = new FollowLine();
+		Behavior b0 = new FindLine();
 		Behavior bHighestPriority = new TurnOff(); 
 		
 		

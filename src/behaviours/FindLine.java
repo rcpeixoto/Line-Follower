@@ -2,16 +2,20 @@ package behaviours;
 
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
+import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 
 public class FindLine implements Behavior{
 	
 	private boolean isSupressed;
 	private LightSensor lightSensor;
+	private DifferentialPilot motor;
 	
-	public FindLine(LightSensor lightSensor) {
-		this.lightSensor = lightSensor;
+	public FindLine() {
+		this.lightSensor = new LightSensor(SensorPort.S1);
 		isSupressed = true;
+		motor = new DifferentialPilot(56.0f, 145.0f, Motor.A, Motor.B);
 	}
 	
 	
@@ -29,30 +33,27 @@ public class FindLine implements Behavior{
 	public void action() {
 		this.isSupressed = false;
 		int lightValue = 0;
+		//Sets motor speed
+		motor.setTravelSpeed(1.0f);
 		//Flag whether the line is found
 		boolean found = false;
-		
 		//Probing left side
-		Motor.A.rotate(360);
-		Motor.B.rotate(-180);
-		while(Motor.A.isMoving()) {
+		motor.rotate(90);
+		while(motor.isMoving()) {
 			lightValue = this.lightSensor.getNormalizedLightValue();
 			if (lightValue > 440 && lightValue < 470) {
+				motor.stop();
 				found = true;
-				Motor.A.stop();
-				Motor.B.stop();
 			}
 		}
 		if(!found) {
 			//Probing Right side
-			Motor.A.rotate(-720);
-			Motor.B.rotate(360);
-			while(Motor.A.isMoving()) {
+			motor.rotate(-90);
+			while(motor.isMoving()) {
 				lightValue = this.lightSensor.getNormalizedLightValue();
 				if (lightValue > 440 && lightValue < 470) {
+					motor.stop();
 					found = true;
-					Motor.A.stop();
-					Motor.B.stop();
 				}
 			}
 		}
