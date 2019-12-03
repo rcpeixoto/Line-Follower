@@ -20,7 +20,7 @@ public class FollowLine implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return this.isSupressed;
+		return true;
 	}
 
 	@Override
@@ -37,14 +37,26 @@ public class FollowLine implements Behavior{
 				Motor.B.setSpeed(this.STANDARD_SPEED);
 			}
 			//Adjust speed of motor when straying to the white board
-			if(lightread > 400 && lightread < 440) Motor.B.setSpeed((this.STANDARD_SPEED*3)/4);
-			if(lightread < 400) Motor.B.setSpeed(this.STANDARD_SPEED/4);
+			if(lightread > 400 && lightread < 440) {
+				Motor.B.setSpeed((this.STANDARD_SPEED*3)/4);
+				Motor.A.setSpeed(this.STANDARD_SPEED);
+			}
+			if(lightread < 400) {
+				Motor.B.setSpeed(this.STANDARD_SPEED/4);
+				Motor.A.setSpeed(this.STANDARD_SPEED);
+			}
 			//Adjust speed of motor when straying to the black stripe
-			if(lightread > 485 && lightread < 515) Motor.A.setSpeed((this.STANDARD_SPEED*3)/4);
-			if(lightread > 515) Motor.A.setSpeed(this.STANDARD_SPEED/4);
+			if(lightread > 485 && lightread < 515) {
+				Motor.A.setSpeed((this.STANDARD_SPEED*3)/4);
+				Motor.B.setSpeed(this.STANDARD_SPEED);
+			}
+			if(lightread > 515) {
+				Motor.A.setSpeed(this.STANDARD_SPEED/4);
+				Motor.B.setSpeed(this.STANDARD_SPEED);
+			}
 		}
-		Motor.A.stop();
 		Motor.B.stop();
+		Motor.A.stop();
 	}
 
 	@Override
