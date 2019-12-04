@@ -3,26 +3,29 @@ package behaviours;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.comm.RConsole.Monitor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 
 public class FindLine implements Behavior{
 	
-	private boolean isSupressed;
+	private final int SPEED;
+	private final int ANGLE;
 	private LightSensor lightSensor;
-	private DifferentialPilot motor;
+	private boolean found;
 	
 	public FindLine() {
 		this.lightSensor = new LightSensor(SensorPort.S1);
-		isSupressed = true;
-		motor = new DifferentialPilot(56.0f, 145.0f, Motor.A, Motor.B);
+		found = false;
+		SPEED = 150;
+		ANGLE = 220;
 	}
 	
 	
 	@Override
 	public boolean takeControl() {
 		int counter = 0;
-		while(lightSensor.getNormalizedLightValue() >= 520) {
+		while(lightSensor.getNormalizedLightValue() >= 500) {
 			++counter;
 			if(counter > 500) return true;
 		}
@@ -31,37 +34,51 @@ public class FindLine implements Behavior{
 
 	@Override
 	public void action() {
-		this.isSupressed = false;
-		int lightValue = 0;
-		//Sets motor speed
-		motor.setTravelSpeed(1.0f);
-		//Flag whether the line is found
-		boolean found = false;
-		//Probing left side
-		motor.rotate(90);
-		while(motor.isMoving()) {
-			lightValue = this.lightSensor.getNormalizedLightValue();
-			if (lightValue > 440 && lightValue < 470) {
-				motor.stop();
-				found = true;
-			}
+		(new SearchLine()).start();;
+		found = false;
+		Motor.A.setSpeed(SPEED);
+		Motor.B.setSpeed(SPEED);
+		
+		Motor.A.rotate(ANGLE, true);
+		Motor.B.rotate(-(ANGLE), true);
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		if(!found) {
-			//Probing Right side
-			motor.rotate(-90);
-			while(motor.isMoving()) {
-				lightValue = this.lightSensor.getNormalizedLightValue();
-				if (lightValue > 440 && lightValue < 470) {
-					motor.stop();
-					found = true;
-				}
-			}
-		}
+		if (found) return;		
+		Motor.A.rotate((-2)*ANGLE, true);
+		Motor.B.rotate(2*ANGLE, true);
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}		
+		Motor.A.stop();
+		Motor.B.stop();
 	}
 
 	@Override
 	public void suppress() {
-		this.isSupressed = true;
 	}
-
+	
+	private class SearchLine extends Thread{
+		
+		
+		@Override
+		public void run() {
+			int light = 0;
+			while(true) {
+				light = lightSensor.getNormalizedLightValue();
+				if(light > 440 && light < 480) {
+					Motor.B.stop();
+					Motor.A.stop();
+					found = true;
+					break;
+				}
+			}
+		}
+	}
 }
