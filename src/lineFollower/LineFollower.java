@@ -4,8 +4,6 @@ import behaviours.FindLine;
 import behaviours.FollowLine;
 import behaviours.TurnOff;
 import communication.BluetoothCon;
-import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 

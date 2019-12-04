@@ -38,26 +38,23 @@ public class FindLine implements Behavior{
 		found = false;
 		Motor.A.setSpeed(SPEED);
 		Motor.B.setSpeed(SPEED);
-		
 		Motor.A.rotate(ANGLE, true);
 		Motor.B.rotate(-(ANGLE), true);
-		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		sleep(3000);
 		if (found) return;		
 		Motor.A.rotate((-2)*ANGLE, true);
 		Motor.B.rotate(2*ANGLE, true);
-		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}		
+		sleep(300);		
 		Motor.A.stop();
 		Motor.B.stop();
+	}
+	
+	private void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}	
 	}
 
 	@Override

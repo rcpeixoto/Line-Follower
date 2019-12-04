@@ -38,7 +38,7 @@ public class DodgeObject implements Behavior{
 		Motor.B.setSpeed(SPEED);
 		Motor.A.rotate(-220, true);
 		Motor.B.rotate(220, true);
-		Motor.C.rotate(-90);
+		Motor.C.rotate(-90, true);
 		sleep(3000);
 		//Rotating the crate
 		while(!this.isSuppress) {
