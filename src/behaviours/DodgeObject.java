@@ -2,7 +2,6 @@ package behaviours;
 
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
-import lejos.nxt.NXT;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.robotics.subsumption.Behavior;
