@@ -8,7 +8,7 @@ import lejos.robotics.subsumption.Behavior;
 
 public class DodgeObject implements Behavior{
 	
-	private boolean isSupressed = true;
+
 	private UltrasonicSensor eye;
 	private final int SPEED;
 	private LightSensor light;
@@ -17,7 +17,7 @@ public class DodgeObject implements Behavior{
 	public DodgeObject() {
 		this.SPEED = 150;
 		light = new LightSensor(SensorPort.S1);
-		isSuppress = false;
+		isSuppress = true;
 		eye = new UltrasonicSensor(SensorPort.S2);
 	}
 	
@@ -29,9 +29,9 @@ public class DodgeObject implements Behavior{
 	
 	@Override
 	public void action() {
-		this.isSupressed = false;
-		while(!this.isSupressed) {
-			this.isSupressed = true;
+		this.isSuppress = false;
+		while(!this.isSuppress) {
+			this.isSuppress = true;
 			int lightValue = 0;
 			int distance = 0;
 			this.isSuppress = false;
@@ -87,8 +87,7 @@ public class DodgeObject implements Behavior{
 	
 	@Override
 	public void suppress() {
-		this.isSuppress = true;
-		
+		this.isSuppress = true;	
 	}
 
 }
