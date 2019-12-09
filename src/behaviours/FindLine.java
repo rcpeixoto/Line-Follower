@@ -18,7 +18,7 @@ public class FindLine implements Behavior{
 		this.lightSensor = new LightSensor(SensorPort.S1);
 		found = false;
 		SPEED = 150;
-		ANGLE = 220;
+		ANGLE = 300;
 	}
 	
 	
@@ -27,7 +27,7 @@ public class FindLine implements Behavior{
 		int counter = 0;
 		while(lightSensor.getNormalizedLightValue() >= 500) {
 			++counter;
-			if(counter > 500) return true;
+			if(counter > 800) return true;
 		}
 		return false;
 	}
@@ -44,7 +44,7 @@ public class FindLine implements Behavior{
 		if (found) return;		
 		Motor.A.rotate((-2)*ANGLE, true);
 		Motor.B.rotate(2*ANGLE, true);
-		sleep(300);		
+		sleep(3000);		
 		Motor.A.stop();
 		Motor.B.stop();
 	}

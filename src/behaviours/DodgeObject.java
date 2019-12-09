@@ -36,8 +36,8 @@ public class DodgeObject implements Behavior{
 		//initial state
 		Motor.A.setSpeed(SPEED);
 		Motor.B.setSpeed(SPEED);
-		Motor.A.rotate(-220, true);
-		Motor.B.rotate(220, true);
+		Motor.A.rotate(-230, true);
+		Motor.B.rotate(230, true);
 		Motor.C.rotate(-90, true);
 		sleep(3000);
 		//Rotating the crate
@@ -50,25 +50,25 @@ public class DodgeObject implements Behavior{
 				sleep(1500);
 				Motor.A.stop();
 				Motor.B.stop();
-				Motor.A.rotate(-220, true);
-				Motor.B.rotate(220, true);
+				Motor.A.rotate(-230, true);
+				Motor.B.rotate(230, true);
 				sleep(1500);
 				break;
 			}else if(distance > 20 && out) {
 				sleep(3000);
 				Motor.A.stop();
 				Motor.B.stop();
-				Motor.A.rotate(220, true);
-				Motor.B.rotate(-220, true);
+				Motor.A.rotate(230, true);
+				Motor.B.rotate(-230, true);
 				sleep(1500);
 				out = false; 
 			}else if (distance < 20) {
 				out = true;		
 			}
+			Motor.C.rotate(90, false);
+			Motor.A.stop();
+			Motor.B.stop();
 		}
-		Motor.C.rotate(90, false);
-		Motor.A.stop();
-		Motor.B.stop();
 	}
 	
 		

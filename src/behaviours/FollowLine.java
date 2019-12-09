@@ -32,7 +32,7 @@ public class FollowLine implements Behavior{
 		
 		while(!this.isSupressed) {
 			lightread = this.light.getNormalizedLightValue();
-			if(lightread > 440 && lightread < 485) {
+			if(lightread > 440 && lightread < 480) {
 				Motor.A.setSpeed(this.STANDARD_SPEED);
 				Motor.B.setSpeed(this.STANDARD_SPEED);
 			}
@@ -42,11 +42,12 @@ public class FollowLine implements Behavior{
 				Motor.A.setSpeed(this.STANDARD_SPEED);
 			}
 			if(lightread < 400) {
-				Motor.B.setSpeed(this.STANDARD_SPEED/4);
+				//Set bias to robot direction
+				Motor.B.setSpeed(this.STANDARD_SPEED/10);
 				Motor.A.setSpeed(this.STANDARD_SPEED);
 			}
 			//Adjust speed of motor when straying to the black stripe
-			if(lightread > 485 && lightread < 515) {
+			if(lightread > 480 && lightread < 515) {
 				Motor.A.setSpeed((this.STANDARD_SPEED*3)/4);
 				Motor.B.setSpeed(this.STANDARD_SPEED);
 			}
